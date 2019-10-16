@@ -1,0 +1,205 @@
+/* FRAMES THE WEB APPLICATION */
+body {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  top: 5%;
+}
+
+/* SCREENS */
+#todo_home {
+  display: grid;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  padding: 5px 10px 5px 10px;
+}
+#todo_list {
+  text-align: center;
+}
+#todo_item {}
+
+/* HOME SCREEN CONTROLS */
+#home_your_lists_container {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 2;
+}
+#home_your_lists_heading {}
+#home_your_lists_list {}
+#home_banner_container {
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 1;
+  cursor: default;
+}
+#home_new_list_container {
+  grid-column: 2 / span 2;
+  grid-row: 2 / span 1;
+  display: flex;
+}
+#home_new_list_button {
+  margin: auto;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* HOME SCREEN CLASSES */
+.home_list_link {}
+
+/* LIST SCREEN CONTROLS */
+#list_heading {
+  text-align: left;
+}
+#list_trash {
+  position: absolute;
+  left: 85%;
+  width: 15%;
+  text-align: right;
+  top: 5%;
+}
+#list_details_container {
+  text-align: left;
+  padding-left: 2%;
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  grid-gap: 5px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+#list_details_name_container {}
+#list_name_prompt {}
+#list_name_textfield {}
+#list_details_owner_container {}
+#list_owner_prompt {}
+#list_owner_textfield {}
+#list_items_container {}
+
+/* LIST SCREEN CLASSES */
+.list_item_card, .list_item_add_card, .list_item_header_card {
+  position: relative;
+  height: 50px;
+  grid-row-gap: 0px;
+  grid-column-gap: 50px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.list_item_card_description {
+  position: absolute;
+  left: 2%;
+}
+.list_item_task_header, .list_item_due_date_header, .list_item_status_header {
+  position: absolute;
+  top: 5%;
+}
+.list_item_card_assigned_to, .list_item_card_due_date, 
+.list_item_card_completed, .list_item_card_not_completed, .list_item_card_button {
+  position: absolute;
+  top: 50%;
+}
+.list_item_task_header, .list_item_card_assigned_to {
+  left: 2%;
+}
+.list_item_due_date_header, .list_item_card_due_date {
+  left: 35%;
+}
+.list_item_status_header, .list_item_card_completed, .list_item_card_not_completed {
+  left: 60%;
+}
+
+.list_item_card_toolbar {
+  position: absolute;
+  left: 85%;
+  width: 15%;
+  top: 5%;
+  height: 90%;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+.list_item_card_up,.list_item_card_down, .list_item_card_delete {
+  text-align: center;
+  border-radius: 5px;
+  margin: 1%;
+}
+.list_item_add_card {
+  text-align: center;
+  vertical-align: center;
+  
+}
+.visible{
+  
+}
+/* ITEM SCREEN CONTROLS */
+#item_heading {}
+#item_form_container {
+  display: grid;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  padding: 0px 0px 0px 0px;
+}
+#item_description_prompt, #item_assigned_to_prompt, #item_due_date_prompt, #item_completed_prompt {
+  float: left;
+  font-size: 14pt;
+}
+#item_description_textfield, #item_assigned_to_textfield, #item_due_date_picker {
+  float: right;
+  font-size: 14pt;
+}
+#item_description_container, #item_assigned_to_container, #item_due_date_container, #item_completed_container, #item_completed_checkbox {
+  text-align: left;
+}
+
+
+
+
+#item_form_submit_button, #item_form_cancel_button {
+  font-size: 14pt;
+}
+
+#disabled{
+  background-color: gray;
+}
+
+/* ITEM SCREEN CLASSES */
+.item_prompt {
+  grid-column: 1 / 4;
+}
+.item_input {
+  grid-column: 3 / 4;
+  width: 70%;
+}
+.item_checkbox {
+  grid-column: 3 / 4;
+  width: 37%;
+}
+
+#overlay {
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  display:none;
+  z-index: 10;
+}
+.button_yes, .button_no{
+    background: var(--swatch-primary);
+    width: 50px;
+    height: 65px;
+}
+.remove{
+  animation-name: hiding;
+  animation-duration: .5s;
+}
+@keyframes loading{
+    from{top: -1500px}
+    to{top: -100px}
+    
+}
+@keyframes hiding{
+  from{top: 0px}
+  to{top: -1500px}
+}
+.animate {
+  animation-duration: 1s;
+  animation-name: hiding;
+}
