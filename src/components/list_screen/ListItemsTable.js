@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 import ListItemCard from './ListItemCard'
+import MoveUp_Transaction from './MoveUp_Transaction'
 
 export class ListItemsTable extends Component {
     moveUp =(index, e)=>{
         e.stopPropagation();
-        let listBeingEdited = this.props.todoList;
-        let tempItem = listBeingEdited.items[index-1];
-        let itemSwap = listBeingEdited.items[index];
-        itemSwap.key = tempItem.key;
-        let newKey = parseInt(tempItem.key);
-        newKey +=1;
-        tempItem.key = newKey;
-        listBeingEdited.items[index-1] = listBeingEdited.items[index];
-        listBeingEdited.items[index] = tempItem;
+        this.props.jTPS.addTransaction(new MoveUp_Transaction(this.props.todoList, index));
+        console.log(this.props.jTPS);
         this.props.loadList(this.props.todoList);
+        
+        
     }
     moveDown =(index, e)=>{
         e.stopPropagation();

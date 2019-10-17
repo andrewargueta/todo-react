@@ -9,6 +9,7 @@ export class TodoListLink extends Component {
                 onClick={this.props.loadList.bind(this, this.props.todoList)}
             >
                 {this.props.todoList.name}<br />
+                <br></br>
             </a>
         )
     }

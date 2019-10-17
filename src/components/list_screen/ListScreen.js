@@ -3,6 +3,7 @@ import ListHeading from './ListHeading'
 import ListItemsTable from './ListItemsTable'
 import ListTrash from './ListTrash'
 import ModalPopup from './ModalPopup'
+
 import PropTypes from 'prop-types';
 
 export class ListScreen extends Component {
@@ -62,7 +63,10 @@ export class ListScreen extends Component {
                                 loadList={this.props.loadList.bind(this)}
                                 sortByTask={this.props.sortByTask}
                                 sortByDate={this.props.sortByDate}
-                                sortByCompleted={this.props.sortByCompleted}/>         
+                                sortByCompleted={this.props.sortByCompleted}
+                                moveUp={this.props.moveUp}
+                                jTPS={this.props.jTPS}
+                                />         
             </div>
         )
     }

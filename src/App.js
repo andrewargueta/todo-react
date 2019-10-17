@@ -3,6 +3,7 @@ import testTodoListData from './TestTodoListData.json'
 import HomeScreen from './components/home_screen/HomeScreen'
 import ItemScreen from './components/item_screen/ItemScreen'
 import ListScreen from './components/list_screen/ListScreen'
+import jTPS from './jTPS/jTPS.js'
 
 const AppScreen = {
   HOME_SCREEN: "HOME_SCREEN",
@@ -16,13 +17,15 @@ class App extends Component {
     todoLists: testTodoListData.todoLists,
     currentSort: 'ascending',
     currentList: null,
-    currentItem: null
+    currentItem: null,
+    currentTPS: new jTPS()
   }
 
   goHome = () => {
     this.setState({currentScreen: AppScreen.HOME_SCREEN});
     this.setState({currentList: null});
     this.setState({currentItem: null});
+    this.setState({currentTPS: new jTPS()});
   }
 
   goItem = (key) => {
@@ -104,14 +107,15 @@ class App extends Component {
   loadList = (todoListToLoad) => {
     this.setState({currentScreen: AppScreen.LIST_SCREEN});
     this.setState({currentList: todoListToLoad});
+    this.setState({currentTPS: this.state.currentTPS });
     this.moveListToTop(todoListToLoad); 
     console.log("currentList: " + this.state.currentList);
     console.log("currentScreen: " + this.state.currentScreen);
+    console.log("currentTPS: " + this.state.currentTPS);
   }
   moveListToTop(listToMove) {
     // REMOVE THE LIST IF IT EXISTS
     this.removeList(listToMove);
-
     // AND THEN ADD IT TO THE TOP OF THE STACK
     this.prependList(listToMove);
   }
@@ -139,7 +143,8 @@ class App extends Component {
       case AppScreen.HOME_SCREEN:
         return <HomeScreen 
         loadList={this.loadList.bind(this)} 
-        todoLists={this.state.todoLists} />;
+        todoLists={this.state.todoLists} 
+        />;
       case AppScreen.LIST_SCREEN:            
         return <ListScreen
           todoLists={this.state.todoLists}
@@ -150,14 +155,16 @@ class App extends Component {
           addItem={this.addItem.bind(this)}
           sortByTask={this.sortByTask.bind(this)}
           sortByDate={this.sortByDate.bind(this)}
-          sortByCompleted={this.sortByCompleted.bind(this)}/>;
+          sortByCompleted={this.sortByCompleted.bind(this)}
+          jTPS={this.state.currentTPS}
+          />;
       case AppScreen.ITEM_SCREEN:
         return <ItemScreen
           currentScreen={this.state.currentScreen}
           todoItem={this.state.currentItem}
           loadList={this.loadList.bind(this)}
           todoList={this.state.currentList}
-           />;
+          />;
       default:
         return <div>ERROR</div>;
     }
