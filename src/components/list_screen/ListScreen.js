@@ -3,6 +3,8 @@ import ListHeading from './ListHeading'
 import ListItemsTable from './ListItemsTable'
 import ListTrash from './ListTrash'
 import ModalPopup from './ModalPopup'
+import UpdateName_Transaction from './UpdateName_Transaction'
+import UpdateOwner_Transaction from './UpdateOwner_Transaction'
 
 
 export class ListScreen extends Component {
@@ -21,10 +23,10 @@ export class ListScreen extends Component {
         }
     }
     updateListName =(e)=> {
-        this.props.todoList.name = e.target.value;
+        this.props.jsTPS.addTransaction(new UpdateName_Transaction(this.props.todoList, e.target.value));
       }
     updateListOwner =(e)=> {
-        this.props.todoList.owner = e.target.value;
+        this.props.jsTPS.addTransaction(new UpdateOwner_Transaction(this.props.todoList, e.target.value));
       }
     
 
