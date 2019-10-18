@@ -37,7 +37,6 @@ class EditItem_Transaction{
         this.todoItem.assigned_to = this.oldAssignedTo;
         this.todoItem.due_date = this.oldDueDate;
         this.todoItem.completed = this.oldCompleted;
-        console.log(this.oldDescription);
     }
 
     /**

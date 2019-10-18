@@ -4,8 +4,10 @@ import HomeScreen from './components/home_screen/HomeScreen'
 import ItemScreen from './components/item_screen/ItemScreen'
 import ListScreen from './components/list_screen/ListScreen'
 import jTPS from './jTPS/jTPS.js'
+import SortByTask_Transaction from './SortByTask_Transaction.js';
+import SortByCompleted_Transaction from './SortByCompleted_Transaction.js';
+import SortByDate_Transaction from './SortByDate_Transaction.js';
 
-let jsTPS = new jTPS();
 
 const AppScreen = {
   HOME_SCREEN: "HOME_SCREEN",
@@ -21,14 +23,14 @@ class App extends Component {
     currentSort: 'ascending',
     currentList: null,
     currentItem: null,
-    currentTPS: jsTPS
+    currentTPS: new jTPS()
   }
 
   goHome = () => {
     this.setState({currentScreen: AppScreen.HOME_SCREEN});
     this.setState({currentList: null});
     this.setState({currentItem: null});
-    jsTPS.clearAllTransactions();
+    this.state.currentTPS.clearAllTransactions();
   }
 
   goItem = (key) => {
@@ -52,57 +54,40 @@ class App extends Component {
   }
 
   sortByTask = (todoListSorted) => {
+    
     if(this.state.currentSort === 'descending'){
-      todoListSorted.items.sort((a, b) => (a.description < b.description) ? 1 : -1)
       this.setState({currentSort: 'ascending'});
-      for(let i = 0; i < todoListSorted.items.length; i++){
-        todoListSorted.items[i].key = i;
-    }
+      this.state.currentTPS.addTransaction(new SortByTask_Transaction(todoListSorted, this.state.currentSort));
       this.loadList(todoListSorted);
     }
     else{
-      todoListSorted.items.sort((a, b) => (a.description > b.description) ? 1 : -1)
       this.setState({currentSort: 'descending'});
-      for(let i = 0; i < todoListSorted.items.length; i++){
-        todoListSorted.items[i].key = i;
-    }
+      this.state.currentTPS.addTransaction(new SortByTask_Transaction(todoListSorted, this.state.currentSort));
       this.loadList(todoListSorted);
     }
   }
 
   sortByDate = (todoListSorted) => {
     if(this.state.currentSort === 'descending'){
-      todoListSorted.items.sort((a, b) => (a.due_date < b.due_date) ? 1 : -1)
       this.setState({currentSort: 'ascending'});
-      for(let i = 0; i < todoListSorted.items.length; i++){
-        todoListSorted.items[i].key = i;
-    }
+      this.state.currentTPS.addTransaction(new SortByDate_Transaction(todoListSorted, this.state.currentSort));
       this.loadList(todoListSorted);
     }
     else{
-      todoListSorted.items.sort((a, b) => (a.due_date > b.due_date) ? 1 : -1)
       this.setState({currentSort: 'descending'});
-      for(let i = 0; i < todoListSorted.items.length; i++){
-        todoListSorted.items[i].key = i;
-    }
+      this.state.currentTPS.addTransaction(new SortByDate_Transaction(todoListSorted, this.state.currentSort));
       this.loadList(todoListSorted);
     }
   }
   sortByCompleted = (todoListSorted) => {
     if(this.state.currentSort === 'descending'){
-      todoListSorted.items.sort((a, b) => (a.completed < b.completed) ? 1 : -1)
       this.setState({currentSort: 'ascending'});
-      for(let i = 0; i < todoListSorted.items.length; i++){
-        todoListSorted.items[i].key = i;
-    }
+      this.state.currentTPS.addTransaction(new SortByCompleted_Transaction(todoListSorted, this.state.currentSort));
       this.loadList(todoListSorted);
     }
     else{
-      todoListSorted.items.sort((a, b) => (a.completed > b.completed) ? 1 : -1)
       this.setState({currentSort: 'descending'});
-      for(let i = 0; i < todoListSorted.items.length; i++){
-        todoListSorted.items[i].key = i;
-    }
+      this.state.currentTPS.addTransaction(new SortByCompleted_Transaction(todoListSorted, this.state.currentSort));
       this.loadList(todoListSorted);
     }
   }
@@ -145,12 +130,11 @@ class App extends Component {
 
   tpsListener=(e)=> {
     if((e.key === 'z' ||e.key === 'Z') && e.ctrlKey) {
-        jsTPS.undoTransaction();
-        //console.log(this.props.todoList);
+        this.state.currentTPS.undoTransaction();
         this.loadList(this.state.currentList);
     }
     else if((e.key === 'y' || e.key === 'Y') && e.ctrlKey){
-        jsTPS.doTransaction();
+        this.state.currentTPS.doTransaction();
         this.loadList(this.state.currentList);
     }
     else{}
@@ -175,7 +159,7 @@ class App extends Component {
           sortByTask={this.sortByTask.bind(this)}
           sortByDate={this.sortByDate.bind(this)}
           sortByCompleted={this.sortByCompleted.bind(this)}
-          jsTPS={jsTPS}
+          jsTPS={this.state.currentTPS}
           />;
       case AppScreen.ITEM_SCREEN:
         return <ItemScreen
@@ -183,7 +167,7 @@ class App extends Component {
           todoItem={this.state.currentItem}
           loadList={this.loadList.bind(this)}
           todoList={this.state.currentList}
-          jsTPS={jsTPS}
+          jsTPS={this.state.currentTPS}
           />;
       default:
         return <div>ERROR</div>;

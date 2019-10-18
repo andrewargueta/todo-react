@@ -26,7 +26,7 @@ class UpdateName_Transaction{
      * @return A string storing a textual summary of this object.
      */
     toString() {
-        return "List Update Name " + this.todoList.name;
+        return "List Update Name " + this.todoName;
     }
 }
 export default UpdateName_Transaction

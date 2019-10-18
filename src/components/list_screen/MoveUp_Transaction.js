@@ -11,7 +11,6 @@ class MoveUp_Transaction{
      * This transaction simply adds the value to the num.
      */
     doTransaction() {
-        let copyItems = this.todoList.items;
         let tempItem = this.todoList.items[this.todoIndex-1];
         let itemSwap = this.todoList.items[this.todoIndex];
         itemSwap.key = tempItem.key;

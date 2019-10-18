@@ -27,7 +27,7 @@ export class ListScreen extends Component {
       }
     updateListOwner =(e)=> {
         this.props.jsTPS.addTransaction(new UpdateOwner_Transaction(this.props.todoList, e.target.value));
-      }
+    }
     
 
     render() {
