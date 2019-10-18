@@ -4,7 +4,6 @@ import ListItemsTable from './ListItemsTable'
 import ListTrash from './ListTrash'
 import ModalPopup from './ModalPopup'
 
-import PropTypes from 'prop-types';
 
 export class ListScreen extends Component {
     getListName() {
@@ -28,9 +27,10 @@ export class ListScreen extends Component {
         this.props.todoList.owner = e.target.value;
       }
     
+
     render() {
         return (
-            <div id="todo_list">
+            <div id="todo_list" onMouseMove={this.addListener}>
                 <ListHeading goHome={this.props.goHome} />
                 <ListTrash />
                 <ModalPopup 
@@ -65,7 +65,7 @@ export class ListScreen extends Component {
                                 sortByDate={this.props.sortByDate}
                                 sortByCompleted={this.props.sortByCompleted}
                                 moveUp={this.props.moveUp}
-                                jTPS={this.props.jTPS}
+                                jsTPS={this.props.jsTPS}
                                 />         
             </div>
         )

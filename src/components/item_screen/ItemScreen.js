@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import EditItem_Transaction from './EditItem_Transaction';
 
 export class ItemScreen extends Component {
     constructor(props) {
@@ -8,7 +9,11 @@ export class ItemScreen extends Component {
             itemDescription: this.props.todoItem.description,
             itemAssignedTo: this.props.todoItem.assigned_to,
             itemDueDate: this.props.todoItem.due_date,
-            itemCompleted: this.props.todoItem.completed
+            itemCompleted: this.props.todoItem.completed,
+            oldItemDescription: this.props.todoItem.description,
+            oldItemAssignedTo: this.props.todoItem.assigned_to,
+            oldItemDueDate: this.props.todoItem.due_date,
+            oldItemCompleted: this.props.todoItem.completed,
         };
       }
 
@@ -31,10 +36,10 @@ export class ItemScreen extends Component {
 
      updateSubmit= ()=>{
         if(this.props.todoItem.key < this.props.todoList.items.length){
-            this.props.todoItem.description = this.state.itemDescription;
-            this.props.todoItem.assigned_to = this.state.itemAssignedTo;
-            this.props.todoItem.due_date = this.state.itemDueDate;
-            this.props.todoItem.completed = this.state.itemCompleted;
+            this.props.jsTPS.addTransaction(new EditItem_Transaction(this.props.todoList, this.props.todoItem, this.state.itemDescription,
+                this.state.itemAssignedTo, this.state.itemDueDate, this.state.itemCompleted, this.state.oldItemDescription
+                ,this.state.oldItemAssignedTo,this.state.oldItemDueDate, this.state.oldItemCompleted));
+            console.log(this.props.jsTPS);
             this.props.loadList(this.props.todoList);
         }
         else{

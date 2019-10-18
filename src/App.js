@@ -5,11 +5,14 @@ import ItemScreen from './components/item_screen/ItemScreen'
 import ListScreen from './components/list_screen/ListScreen'
 import jTPS from './jTPS/jTPS.js'
 
+let jsTPS = new jTPS();
+
 const AppScreen = {
   HOME_SCREEN: "HOME_SCREEN",
   LIST_SCREEN: "LIST_SCREEN",
   ITEM_SCREEN: "ITEM_SCREEN"
 }
+
 
 class App extends Component {
   state = {
@@ -18,14 +21,14 @@ class App extends Component {
     currentSort: 'ascending',
     currentList: null,
     currentItem: null,
-    currentTPS: new jTPS()
+    currentTPS: jsTPS
   }
 
   goHome = () => {
     this.setState({currentScreen: AppScreen.HOME_SCREEN});
     this.setState({currentList: null});
     this.setState({currentItem: null});
-    this.setState({currentTPS: new jTPS()});
+    jsTPS.clearAllTransactions();
   }
 
   goItem = (key) => {
@@ -103,11 +106,10 @@ class App extends Component {
       this.loadList(todoListSorted);
     }
   }
-  
+
   loadList = (todoListToLoad) => {
     this.setState({currentScreen: AppScreen.LIST_SCREEN});
     this.setState({currentList: todoListToLoad});
-    this.setState({currentTPS: this.state.currentTPS });
     this.moveListToTop(todoListToLoad); 
     console.log("currentList: " + this.state.currentList);
     console.log("currentScreen: " + this.state.currentScreen);
@@ -137,8 +139,25 @@ class App extends Component {
   prependList(listToPrepend) {
     this.state.todoLists.unshift(listToPrepend);
   }
+  addListener =()=> {
+    window.addEventListener('keydown',this.tpsListener);
+  }
+
+  tpsListener=(e)=> {
+    if((e.key === 'z' ||e.key === 'Z') && e.ctrlKey) {
+        jsTPS.undoTransaction();
+        //console.log(this.props.todoList);
+        this.loadList(this.state.currentList);
+    }
+    else if((e.key === 'y' || e.key === 'Y') && e.ctrlKey){
+        jsTPS.doTransaction();
+        this.loadList(this.state.currentList);
+    }
+    else{}
+  }
 
   render() {
+    onmousemove = this.addListener;
     switch(this.state.currentScreen) {
       case AppScreen.HOME_SCREEN:
         return <HomeScreen 
@@ -156,7 +175,7 @@ class App extends Component {
           sortByTask={this.sortByTask.bind(this)}
           sortByDate={this.sortByDate.bind(this)}
           sortByCompleted={this.sortByCompleted.bind(this)}
-          jTPS={this.state.currentTPS}
+          jsTPS={jsTPS}
           />;
       case AppScreen.ITEM_SCREEN:
         return <ItemScreen
@@ -164,6 +183,7 @@ class App extends Component {
           todoItem={this.state.currentItem}
           loadList={this.loadList.bind(this)}
           todoList={this.state.currentList}
+          jsTPS={jsTPS}
           />;
       default:
         return <div>ERROR</div>;
