@@ -30,6 +30,7 @@ class SortByDate_Transaction{
      */
     undoTransaction() {
         this.todoList.items = this.initItems;
+        this.initItems = this.todoList.items;
         if(this.todoSort === 'descending'){
             this.todoSort = 'ascending';
             for(let i = 0; i < this.todoList.items.length; i++){
