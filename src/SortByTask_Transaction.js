@@ -3,13 +3,15 @@ class SortByTask_Transaction{
     constructor(initList, initSort){
         this.todoList = initList;
         this.todoSort = initSort;
-        this.initItems =  this.todoList.items.slice();;
+        this.redoItems =   this.todoList.items;
+        this.initItems =  this.todoList.items.slice();
     }
 
     /**
      * This transaction simply adds the value to the num.
      */
     doTransaction() {
+        this.todoList.items = this.redoItems;
         if(this.todoSort === 'descending'){
             this.todoList.items.sort((a, b) => (a.description < b.description) ? 1 : -1);
             for(let i = 0; i < this.todoList.items.length; i++){
@@ -30,19 +32,11 @@ class SortByTask_Transaction{
      */
     undoTransaction() {
         this.todoList.items = this.initItems;
-        this.initItems = this.todoList.items;
-        if(this.todoSort === 'descending'){
-            this.todoSort = 'ascending';
-            for(let i = 0; i < this.todoList.items.length; i++){
-                this.todoList.items[i].key = i;
-            }
+        this.initList = this.redoItems;
+        for(let i = 0; i < this.todoList.items.length; i++){
+            this.todoList.items[i].key = i;
         }
-        else{
-            this.todoSort = 'ascending';
-            for(let i = 0; i < this.todoList.items.length; i++){
-                this.todoList.items[i].key = i;
-            }
-        }
+        
 }
 
     /**
