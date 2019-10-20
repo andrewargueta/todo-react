@@ -22,14 +22,26 @@ class App extends Component {
     todoLists: testTodoListData.todoLists,
     currentSort: 'ascending',
     currentList: null,
-    currentItem: null,
+    currentItem: {
+      "key": 100000000000000000000000000,
+      "description": "",
+      "due_date": "",
+      "assigned_to": "",
+      "completed": false
+  },
     currentTPS: new jTPS()
   }
-
   goHome = () => {
     this.setState({currentScreen: AppScreen.HOME_SCREEN});
     this.setState({currentList: null});
-    this.setState({currentItem: null});
+    this.setState({currentItem: {
+      "key": 100000000000000000000000000,
+      "description": "",
+      "due_date": "",
+      "assigned_to": "",
+      "completed": false
+  }
+});
     this.state.currentTPS.clearAllTransactions();
   }
 
@@ -56,43 +68,44 @@ class App extends Component {
   sortByTask = (todoListSorted) => {
     
     if(this.state.currentSort === 'descending'){
-      this.setState({currentSort: 'ascending'});
       this.state.currentTPS.addTransaction(new SortByTask_Transaction(todoListSorted, this.state.currentSort));
+      this.setState({currentSort: 'ascending'});
       this.loadList(todoListSorted);
     }
     else{
-      this.setState({currentSort: 'descending'});
       this.state.currentTPS.addTransaction(new SortByTask_Transaction(todoListSorted, this.state.currentSort));
+      this.setState({currentSort: 'descending'});
       this.loadList(todoListSorted);
     }
   }
 
   sortByDate = (todoListSorted) => {
     if(this.state.currentSort === 'descending'){
-      this.setState({currentSort: 'ascending'});
       this.state.currentTPS.addTransaction(new SortByDate_Transaction(todoListSorted, this.state.currentSort));
+      this.setState({currentSort: 'ascending'});
       this.loadList(todoListSorted);
     }
     else{
-      this.setState({currentSort: 'descending'});
       this.state.currentTPS.addTransaction(new SortByDate_Transaction(todoListSorted, this.state.currentSort));
+      this.setState({currentSort: 'descending'});
       this.loadList(todoListSorted);
     }
   }
   sortByCompleted = (todoListSorted) => {
     if(this.state.currentSort === 'descending'){
-      this.setState({currentSort: 'ascending'});
       this.state.currentTPS.addTransaction(new SortByCompleted_Transaction(todoListSorted, this.state.currentSort));
+      this.setState({currentSort: 'ascending'});
       this.loadList(todoListSorted);
     }
     else{
-      this.setState({currentSort: 'descending'});
       this.state.currentTPS.addTransaction(new SortByCompleted_Transaction(todoListSorted, this.state.currentSort));
+      this.setState({currentSort: 'descending'});
       this.loadList(todoListSorted);
     }
   }
 
   loadList = (todoListToLoad) => {
+    this.setState({currentScreen: AppScreen.ITEM_SCREEN});
     this.setState({currentScreen: AppScreen.LIST_SCREEN});
     this.setState({currentList: todoListToLoad});
     this.moveListToTop(todoListToLoad); 

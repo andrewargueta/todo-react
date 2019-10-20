@@ -7,8 +7,14 @@ export class ModalPopup extends Component {
     }
     deleteList=()=>{
         let indexOfList = this.props.todoLists.indexOf(this.props.todoList);
-        if (indexOfList >= 0)
+        if (indexOfList >= 0){
+        
             this.props.todoLists.splice(indexOfList, 1);
+        
+            for(var i = 0; i <this.props.todoLists.length ; i++){
+                this.props.todoLists[i].key = i;
+        }
+    }
         this.props.goHome();
     }
     render() {
