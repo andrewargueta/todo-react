@@ -155,7 +155,7 @@ class App extends Component {
   }
 }
 
-  render() {
+  render() { 
     onmousemove = this.addListener;
     switch(this.state.currentScreen) {
       case AppScreen.HOME_SCREEN:
