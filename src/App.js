@@ -142,16 +142,18 @@ class App extends Component {
   }
 
   tpsListener=(e)=> {
-    if((e.key === 'z' ||e.key === 'Z') && e.ctrlKey) {
+    if(this.state.currentScreen != AppScreen.HOME_SCREEN){
+      if((e.key === 'z' ||e.key === 'Z') && e.ctrlKey) {
         this.state.currentTPS.undoTransaction();
         this.loadList(this.state.currentList);
     }
-    else if((e.key === 'y' || e.key === 'Y') && e.ctrlKey){
+      else if((e.key === 'y' || e.key === 'Y') && e.ctrlKey){
         this.state.currentTPS.doTransaction();
         this.loadList(this.state.currentList);
     }
     else{}
   }
+}
 
   render() {
     onmousemove = this.addListener;
